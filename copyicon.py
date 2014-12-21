@@ -23,7 +23,7 @@ def getFileName(pathname):
 resFolder = 'test'
 
 # Material design icon folder path
-iconFolder = '/material-design-icons'
+iconFolder = 'material-design-icons'
 
 # Check for correct number of arguments
 if len(sys.argv) != 4:
