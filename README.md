@@ -1,17 +1,13 @@
-Searches Google's material-design-icons for a certain icon.
-Upon finding a match, asks for confirmation for file name.
-Then, copies the proper resources to the corresponding drawable folder
-of the desired program into the correct folders:
-drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
+Searches Google's material-design-icons for a certain icon, finds a match, and copies the proper resources to the corresponding into the correct folders:\s\s drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
 
-Preparation:
-1. copyicon.py in the same directory as your application folder.
+**Preparation:**\s\s
+1. copyicon.py in the same directory as your application folder.\s\s
 2. Change resFolder variable to your app's /res/ folder (easier than typing path name every time you want to copy an icon.
 
-Example usage:
+**Example usage:**\s\s
 Want the 24dp delete icon from material-design-icons in my app's drawable folders saved as "remove.png"
 
-python3 copyicon.py delete 24 remove
+`python3 copyicon.py delete 24 remove`
 
 This command will let you select which delete icon at 24dp, as there are several options like a white, grey, or black version and copy the one you want into the corresponding drawable folders, i.e. drawable-mdpi, etc.
 
