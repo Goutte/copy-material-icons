@@ -12,7 +12,7 @@ drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
 
 Want the 24dp delete icon from material-design-icons in my app's drawable folders saved as "remove.png"
 
-`python3 copyicon.py delete 24 remove`
+`python3 copyicon.py delete remove`
 
 This command will let you select which delete icon at 24dp, as there are several options like a white, grey, or black version and copy the one you want into the corresponding drawable folders, i.e. drawable-mdpi, etc.
 

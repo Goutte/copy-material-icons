@@ -9,7 +9,7 @@ drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
 
 IMPORTANT: Change resFolder to the appropriate /res/ folder path.
 
-USAGE: python3 copyicon.py <icon> <dp size> <new name>
+USAGE: python3 copyicon.py <icon> <new name>
 """
 
 import fnmatch, os, shutil, subprocess, sys
@@ -26,20 +26,19 @@ resFolder = 'yourapp/src/main/res'
 iconFolder = 'material-design-icons'
 
 # Check for correct number of arguments
-if len(sys.argv) != 4:
-    sys.exit('Usage: python3 copyicon.py <icon> <dp size> <new name>')
+if len(sys.argv) != 3:
+    sys.exit('Usage: python3 copyicon.py <icon> <new name>')
 
 # Folder to search
 findFile = sys.argv[1]
-findDP = sys.argv[2]
-newFileName = sys.argv[3]
+newFileName = sys.argv[2]
 
 # Add .png extension if missing input
 if '.png' not in newFileName:
     newFileName += '.png'
 
 # File matching pattern
-find = '*' + findFile + '*' + findDP + 'dp.png'
+find = '*' + findFile + '*.png'
 
 # Check if the material design icons are in the same folder
 if not os.path.isdir(iconFolder):
@@ -69,7 +68,7 @@ for root, directories, filenames in os.walk(iconFolder):
 
 # Alert user if there are no matches
 if len(matches) == 0:
-    sys.exit('No matches.')
+    sys.exit('No matches found for \'' + findFile + '\'')
 
 # Options found within mdpi folder
 options = []
