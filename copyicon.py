@@ -20,7 +20,7 @@ def getFileName(pathname):
     return split[(len(split) - 1)]
 
 # CHANGE THIS PATH TO YOUR RES FOLDER
-resFolder = 'test'
+resFolder = 'yourapp/src/main/res'
 
 # Material design icon folder path
 iconFolder = 'material-design-icons'
