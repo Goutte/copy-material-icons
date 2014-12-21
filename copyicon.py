@@ -12,18 +12,18 @@ IMPORTANT: Change resFolder to the appropriate /res/ folder path.
 USAGE: python3 copyicon.py <icon> <new name>
 """
 
+# CHANGE THIS PATH TO YOUR RES FOLDER
+resFolder = 'yourapp/src/main/res'
+
+# Material design icon folder path
+iconFolder = 'material-design-icons'
+
 import fnmatch, os, shutil, subprocess, sys
 
 # Gets the file name from a path name
 def getFileName(pathname):
     split = pathname.split('/')
     return split[(len(split) - 1)]
-
-# CHANGE THIS PATH TO YOUR RES FOLDER
-resFolder = 'yourapp/src/main/res'
-
-# Material design icon folder path
-iconFolder = 'material-design-icons'
 
 # Check for correct number of arguments
 if len(sys.argv) != 3:
