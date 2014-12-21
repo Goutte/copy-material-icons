@@ -1,12 +1,12 @@
-Searches Google's material-design-icons for a certain icon, finds a match, and copies the proper resources to the corresponding into the correct folders: 
+Searches Google's material-design-icons for a certain icon, finds a match, and copies the selected resource into the corresponding folders in your /res/ folder: 
 
 drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
 
 **Preparation:**
 
-1. copyicon.py in the same directory as your application folder.
+1. Clone copyicon.py in the same directory as your application folder.
 
-2. Change resFolder variable to your app's /res/ folder (easier than typing path name every time you want to copy an icon.
+2. Change resFolder variable to your app's /res/ folder path
 
 **Example usage:**
 
