@@ -1,67 +1,75 @@
+#! /usr/bin/python3
+
 """
-copyicon.py
---
 Searches Google's material-design-icons for a certain icon.
 Upon finding a match, asks for confirmation for file name.
 Then, copies the proper resources to the corresponding drawable folder
 of the desired program into the correct folders:
 drawable-mdpi, drawable-hdpi, drawable-xhdpi, drawable-xxhpdi, drawable-xxxhdpi
 
-IMPORTANT: Change resFolder to the appropriate /res/ folder path.
+IMPORTANT: Change resDir to the appropriate `/res/` folder path.
 
-USAGE: python3 copyicon.py <icon> <new name>
+USAGE: python3 copyicon.py <icon> [<new name>]
 """
 
 # CHANGE THIS PATH TO YOUR RES FOLDER
-resFolder = 'yourapp/src/main/res'
+resDir = 'app/src/main/res'
 
-# Material design icon folder path
-iconFolder = 'material-design-icons'
+# Material design icon directory path
+iconDir = 'material-design-icons'
+
+###########################################
 
 import fnmatch, os, shutil, subprocess, sys
 
-# Gets the file name from a path name
+# Sanitize the configuration
+resDir  = os.path.abspath(os.path.expanduser(iconDir))
+iconDir = os.path.abspath(os.path.expanduser(iconDir))
+
+# Get the file name from a path name
 def getFileName(pathname):
     split = pathname.split('/')
     return split[(len(split) - 1)]
 
-# Check for correct number of arguments
-if len(sys.argv) != 3:
-    sys.exit('Usage: python3 copyicon.py <icon> <new name>')
+# Require a correct number of arguments
+if len(sys.argv) > 3 or len(sys.argv) < 2:
+    sys.exit('Usage: ./copyicon <icon> [<new name>]')
 
-# Folder to search
+# Sanitize inputs
 findFile = sys.argv[1]
-newFileName = sys.argv[2]
-
-# Add .png extension if missing input
-if '.png' not in newFileName:
-    newFileName += '.png'
+if len(sys.argv) == 3:
+    newFileName = sys.argv[2]
+    # Add .png extension if missing input
+    if '.png' not in newFileName:
+        newFileName += '.png'
+else:
+    newFileName = None
 
 # File matching pattern
 find = '*' + findFile + '*.png'
 
 # Check if the material design icons are in the same folder
-if not os.path.isdir(iconFolder):
+if not os.path.isdir(iconDir):
     print('Cannot find Google\'s material-design-icons folder.')
     answer = input('Would you like to clone it now? (y/n): ')
 
     if 'y' in answer or 'Y' in answer:
         url = 'https://github.com/google/material-design-icons'
-        subprocess.call('git clone ' + url, shell=True)
+        subprocess.call('git clone ' + url + ' ' + iconDir, shell=True)
         print()
     else:
         sys.exit('The icons must be cloned in order to continue.')
 
 
-# Check if folder exists
-if not os.path.isdir(resFolder): 
-    sys.exit('The specified resource folder \'' 
-            + resFolder + '\' does not exist.\n'
-            + 'Change the \'resFolder\' variable in this script.')
+# Check if resource directory exists
+if not os.path.isdir(resDir):
+    sys.exit('The specified resource folder \''
+            + resDir + '\' does not exist.\n'
+            + 'Change the \'resDir\' variable in this script.')
 
 # Find files that match the icon and dp size
 matches = []
-for root, directories, filenames in os.walk(iconFolder):
+for root, directories, filenames in os.walk(iconDir):
     if 'drawable' in root:
         for filename in fnmatch.filter(filenames, find):
             matches.append(os.path.join(root, filename))
@@ -69,6 +77,9 @@ for root, directories, filenames in os.walk(iconFolder):
 # Alert user if there are no matches
 if len(matches) == 0:
     sys.exit('No matches found for \'' + findFile + '\'')
+
+# Sort matches alphabetically
+matches.sort()
 
 # Options found within mdpi folder
 options = []
@@ -91,15 +102,17 @@ if index < 0 or index >= len(options):
 
 # Get icon file name from full path name
 icon = getFileName(options[index])
+if newFileName is None:
+    newFileName = icon
 
-# Drawable folder path names
-mdpi = resFolder + '/drawable-mdpi'
-hdpi = resFolder + '/drawable-hdpi'
-xhdpi = resFolder + '/drawable-xhdpi'
-xxhdpi = resFolder + '/drawable-xxhdpi'
-xxxhdpi = resFolder + '/drawable-xxxhdpi'
+# Drawable directories path names
+mdpi = resDir + '/drawable-mdpi'
+hdpi = resDir + '/drawable-hdpi'
+xhdpi = resDir + '/drawable-xhdpi'
+xxhdpi = resDir + '/drawable-xxhdpi'
+xxxhdpi = resDir + '/drawable-xxxhdpi'
 
-# Ensure that the folders exist
+# Ensure that the directories exist
 if not os.path.isdir(mdpi):
     os.mkdir(mdpi)
 if not os.path.isdir(hdpi):
@@ -111,7 +124,7 @@ if not os.path.isdir(xxhdpi):
 if not os.path.isdir(xxxhdpi):
     os.mkdir(xxxhdpi)
 
-# Copy the files into the corresponding folders
+# Copy the files into their corresponding directories
 for filename in matches:
     if icon in filename:
         if 'xxxhdpi' in filename:
